@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "mkdir -p $env:appdata\\postgresql\\; Invoke-WebRequest -Uri https://cockroachlabs.cloud/clusters/45f31ba2-d67c-45a4-965d-5bf0ba255aa0/cert -OutFile $env:appdata\\postgresql\\root.crt && next build",
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
