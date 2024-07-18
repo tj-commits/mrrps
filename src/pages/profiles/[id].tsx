@@ -80,6 +80,7 @@ const ProfilePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           isLoading={mrrps.isLoading}
           hasMore={mrrps.hasNextPage}
           fetchNewMrrps={mrrps.fetchNextPage}
+          onlyFollowing={false}
         />
       </main>
     </>
