@@ -14,7 +14,10 @@ export function SideNav() {
           <Link href="/">
             <IconHoverEffect>
               <span className="flex items-center gap-4">
-                <VscHome className="h-8 w-8" />
+                <VscHome className="h-8 w-8 fill-blue-700" />
+                <span className="hidden text-lg text-blue-700 md:inline">
+                  Feed
+                </span>
               </span>
             </IconHoverEffect>
           </Link>
@@ -24,7 +27,10 @@ export function SideNav() {
             <Link href={`/profiles/${user.id}`}>
               <IconHoverEffect>
                 <span className="flex items-center gap-4">
-                  <VscAccount className="h-8 w-8" />
+                  <VscAccount className="h-8 w-8 fill-orange-400" />
+                  <span className="hidden text-lg text-orange-400 md:inline">
+                    Profile
+                  </span>
                 </span>
               </IconHoverEffect>
             </Link>
@@ -35,7 +41,10 @@ export function SideNav() {
             <button onClick={() => void signIn()}>
               <IconHoverEffect>
                 <span className="flex items-center gap-4">
-                  <VscSignIn className="h-8 w-8" />
+                  <VscSignIn className="h-8 w-8 fill-green-700" />
+                  <span className="hidden text-lg text-green-700 md:inline">
+                    Sign In
+                  </span>
                 </span>
               </IconHoverEffect>
             </button>
@@ -45,7 +54,10 @@ export function SideNav() {
             <button onClick={() => void signOut()}>
               <IconHoverEffect>
                 <span className="flex items-center gap-4">
-                  <VscSignOut className="h-8 w-8" />
+                  <VscSignOut className="h-8 w-8 fill-red-700" />
+                  <span className="hidden text-lg text-red-700 md:inline">
+                    Sign Out
+                  </span>
                 </span>
               </IconHoverEffect>
             </button>
