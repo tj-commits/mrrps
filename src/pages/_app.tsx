@@ -15,10 +15,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <Head>
-        <title>Mrrp - What the cool cats are doing</title>
+        <title>Mrrps - What the cool cats are doing</title>
         <meta
           name="description"
-          content="Mrrp. Social media that's what the cool cats are doing."
+          content="Mrrps. Social media that's what the cool cats are doing."
         />
       </Head>
       <div className="container mx-auto flex items-start sm:pr-4">

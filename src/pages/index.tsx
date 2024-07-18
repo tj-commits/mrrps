@@ -1,5 +1,6 @@
 import { type NextPage } from "next";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useState } from "react";
 import { InfiniteMrrpList } from "~/components/InfiniteMrrpList";
 import { NewMrrpForm } from "~/components/NewMrrpForm";
@@ -14,7 +15,15 @@ const Home: NextPage = () => {
   return (
     <>
       <header className="sticky top-0 z-10 border-b bg-white pt-2">
-        <h1 className="mb-2 px-4 text-lg font-bold">Feed</h1>
+        <h1 className="mb-2 px-4 text-lg font-bold">
+          Mrrps - Social media by{" "}
+          <Link
+            href="https://www.rafdo.rf.gd"
+            className="text-blue-700 underline"
+          >
+            Rafdo
+          </Link>
+        </h1>
       </header>
       <NewMrrpForm />
       {session.status === "authenticated" && (
@@ -54,6 +63,7 @@ function RecentMrrps() {
       isLoading={mrrps.isLoading}
       hasMore={mrrps.hasNextPage}
       fetchNewMrrps={mrrps.fetchNextPage}
+      onlyFollowing={false}
     />
   );
 }
@@ -71,6 +81,7 @@ function FollowingMrrps() {
       isLoading={mrrps.isLoading}
       hasMore={mrrps.hasNextPage}
       fetchNewMrrps={mrrps.fetchNextPage}
+      onlyFollowing={true}
     />
   );
 }

@@ -26,6 +26,7 @@ type InfiniteMrrpListProps = {
   hasMore: boolean | undefined;
   fetchNewMrrps: () => Promise<unknown>;
   mrrps?: Mrrp[];
+  onlyFollowing: boolean;
 };
 
 export function InfiniteMrrpList({
@@ -34,6 +35,7 @@ export function InfiniteMrrpList({
   isLoading,
   fetchNewMrrps,
   hasMore,
+  onlyFollowing,
 }: InfiniteMrrpListProps) {
   if (isLoading) return <LoadingSpinner />;
   if (isError) {
@@ -43,7 +45,11 @@ export function InfiniteMrrpList({
 
   if (mrrps == null || mrrps?.length === 0) {
     return (
-      <h2 className="text-2x1 my-4 text-center text-gray-500">No mrrps</h2>
+      <h2 className="text-2x1 my-4 text-center text-gray-500">
+        {onlyFollowing === true
+          ? "You are not following any accounts yet. To follow someone, visit their profile page by clicking on their profile picture, and click Follow."
+          : "No mrrps"}
+      </h2>
     );
   }
 
