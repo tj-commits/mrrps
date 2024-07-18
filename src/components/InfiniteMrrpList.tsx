@@ -23,7 +23,7 @@ type Mrrp = {
 type InfiniteMrrpListProps = {
   isLoading: boolean;
   isError: boolean;
-  hasMore: boolean | undefined;
+  hasMore: boolean;
   fetchNewMrrps: () => Promise<unknown>;
   mrrps?: Mrrp[];
 };

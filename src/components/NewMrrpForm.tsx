@@ -1,6 +1,4 @@
 import { useSession } from "next-auth/react";
-import { Button } from "./Button";
-import { ProfileImage } from "./ProfileImage";
 import {
   FormEvent,
   useCallback,
@@ -9,6 +7,8 @@ import {
   useState,
 } from "react";
 import { api } from "~/utils/api";
+import { Button } from "./Button";
+import { ProfileImage } from "./ProfileImage";
 
 function updateTextAreaSize(textArea?: HTMLTextAreaElement) {
   if (textArea == null) return;
@@ -26,12 +26,11 @@ export function NewMrrpForm() {
 function Form() {
   const session = useSession();
   const [inputValue, setInputValue] = useState("");
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>();
   const inputRef = useCallback((textArea: HTMLTextAreaElement) => {
     updateTextAreaSize(textArea);
     textAreaRef.current = textArea;
   }, []);
-
   const trpcUtils = api.useContext();
 
   useLayoutEffect(() => {
@@ -40,12 +39,9 @@ function Form() {
 
   const createMrrp = api.mrrp.create.useMutation({
     onSuccess: (newMrrp) => {
-      //console.log(newMrrp);
       setInputValue("");
 
-      if (session.status !== "authenticated") {
-        return;
-      }
+      if (session.status !== "authenticated") return;
 
       trpcUtils.mrrp.infiniteFeed.setInfiniteData({}, (oldData) => {
         if (oldData == null || oldData.pages[0] == null) return;
@@ -56,8 +52,8 @@ function Form() {
           likedByMe: false,
           user: {
             id: session.data.user.id,
-            name: session.data.user.name,
-            image: session.data.user.image,
+            name: session.data.user.name || null,
+            image: session.data.user.image || null,
           },
         };
 
@@ -96,7 +92,7 @@ function Form() {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           className="flex-grow resize-none overflow-hidden p-4 text-lg outline-none"
-          placeholder="What's up?"
+          placeholder="What's happening?"
         />
       </div>
       <Button className="self-end">Mrrp</Button>
