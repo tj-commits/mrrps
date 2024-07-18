@@ -23,7 +23,7 @@ type Mrrp = {
 type InfiniteMrrpListProps = {
   isLoading: boolean;
   isError: boolean;
-  hasMore: boolean;
+  hasMore: boolean | undefined;
   fetchNewMrrps: () => Promise<unknown>;
   mrrps?: Mrrp[];
 };
@@ -46,6 +46,8 @@ export function InfiniteMrrpList({
       <h2 className="text-2x1 my-4 text-center text-gray-500">No mrrps</h2>
     );
   }
+
+  if (hasMore == null) hasMore = false;
 
   return (
     <ul>
