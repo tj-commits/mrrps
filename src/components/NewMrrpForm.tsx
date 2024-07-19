@@ -9,6 +9,7 @@ import {
 import { api } from "~/utils/api";
 import { Button } from "./Button";
 import { ProfileImage } from "./ProfileImage";
+import bleeeepifier from 'bleeeepifier';
 
 function updateTextAreaSize(textArea?: HTMLTextAreaElement) {
   if (textArea == null) return;
@@ -75,6 +76,11 @@ function Form() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
+
+    if (bleeeepifier.clean(inputValue, 'bleepuiriaouynuoiya4').indexOf('bleepuiriaouynuoiya4') !== -1) {
+      alert('No bad words')
+      return
+    }
 
     createMrrp.mutate({ content: inputValue });
   }
