@@ -9,7 +9,11 @@ import {
 import { api } from "~/utils/api";
 import { Button } from "./Button";
 import { ProfileImage } from "./ProfileImage";
-import bleeeepifier from 'bleeeepifier';
+import { ToastContainer, toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import BadWordsFilter from "bad-words";
+
+const badWords = new BadWordsFilter();
 
 function updateTextAreaSize(textArea?: HTMLTextAreaElement) {
   if (textArea == null) return;
@@ -75,11 +79,22 @@ function Form() {
   if (session.status !== "authenticated") return null;
 
   function handleSubmit(e: FormEvent) {
+    // The magic
     e.preventDefault();
 
-    if (bleeeepifier.clean(inputValue, 'bleepuiriaouynuoiya4').indexOf('bleepuiriaouynuoiya4') !== -1) {
-      alert('No bad words')
-      return
+    if (badWords.isProfane(inputValue)) {
+      toast.error("Profanity is not allowed.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Slide,
+      });
+      return;
     }
 
     createMrrp.mutate({ content: inputValue });
@@ -97,6 +112,7 @@ function Form() {
           style={{ height: 0 }}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={(e)=>{if(e.key === 'Enter') handleSubmit(e) }}
           className="flex-grow resize-none overflow-hidden p-4 text-lg outline-none"
           placeholder="What's up?"
         />

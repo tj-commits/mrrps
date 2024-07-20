@@ -64,6 +64,20 @@ export const mrrpRouter = createTRPCRouter({
 
       return mrrp;
     }),
+  
+    delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input: { id }, ctx }) => {
+      await ctx.prisma.mrrp.delete({
+        where: { id },
+      });
+
+      void ctx.revalidateSSG?.(`/profiles/${ctx.session.user.id}`);
+
+      return { deleted: true };
+    }),
+
+
   toggleLike: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ input: { id }, ctx }) => {
