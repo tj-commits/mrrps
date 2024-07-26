@@ -60,7 +60,7 @@ export const mrrpRouter = createTRPCRouter({
         data: { content, userId: ctx.session.user.id },
       });
 
-      void ctx.revalidateSSG?.(`/profiles${ctx.session.user.id}`);
+      void ctx.revalidateSSG?.(`/profiles/${ctx.session.user.id}`);
 
       return mrrp;
     }),

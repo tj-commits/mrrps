@@ -170,12 +170,7 @@ function MrrpCard({
   function handleDelete() {
     const shouldIDelete1 = confirm('Are you sure that you want to delete this mrrp? Deletion is permanent.')
     if (!shouldIDelete1) return
-    const shouldIDelete2 = confirm('Are you absolutely sure? Like, deleting a mrrp is so permanent that it can\'t be restored by US!')
-    if (!shouldIDelete2) return
-    const shouldIDelete3 = confirm('FINAL WARNING! DO YOU UNDERSTAND THE CONSEQUENCES?!?!???!?!')
-    if (!shouldIDelete3) return
     deleteMrrp.mutate({ id });
-    alert('Okay...')
   }
 
   const condition =
