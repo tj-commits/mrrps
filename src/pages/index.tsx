@@ -55,7 +55,7 @@ function RecentMrrps() {
     {},
     { getNextPageParam: (lastPage) => lastPage.nextCursor }
   );
-
+  
   return (
     <InfiniteMrrpList
       mrrps={mrrps.data?.pages.flatMap((page) => page.mrrps)}

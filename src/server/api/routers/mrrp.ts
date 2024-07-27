@@ -54,10 +54,10 @@ export const mrrpRouter = createTRPCRouter({
       }
     ),
   create: protectedProcedure
-    .input(z.object({ content: z.string() }))
-    .mutation(async ({ input: { content }, ctx }) => {
+    .input(z.object({ content: z.string(), image_url: z.string() }))
+    .mutation(async ({ input: { content, image_url }, ctx }) => {
       const mrrp = await ctx.prisma.mrrp.create({
-        data: { content, userId: ctx.session.user.id },
+        data: { content, userId: ctx.session.user.id, image_url },
       });
 
       void ctx.revalidateSSG?.(`/profiles/${ctx.session.user.id}`);
@@ -118,6 +118,7 @@ async function getInfiniteMrrps({
     select: {
       id: true,
       content: true,
+      image_url: true,
       createdAt: true,
       _count: { select: { likes: true } },
       likes:
@@ -141,6 +142,7 @@ async function getInfiniteMrrps({
       return {
         id: mrrp.id,
         content: mrrp.content,
+        image_url: mrrp.image_url,
         createdAt: mrrp.createdAt,
         likeCount: mrrp._count.likes,
         user: mrrp.user,

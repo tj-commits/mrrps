@@ -43,3 +43,4 @@ yarn-error.log*
 
 # we dont want to delete our database
 thedeath.js
+.vercel

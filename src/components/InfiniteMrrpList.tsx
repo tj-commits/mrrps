@@ -6,10 +6,12 @@ import { VscHeart, VscHeartFilled, VscTrash } from "react-icons/vsc";
 import { IconHoverEffect } from "./IconHoverEffect";
 import { api } from "~/utils/api";
 import { LoadingSpinner } from "./LoadingSpinner";
+import Image from "next/image";
 
 type Mrrp = {
   id: string;
   content: string;
+  image_url: string;
   createdAt: Date;
   likeCount: number;
   likedByMe: boolean;
@@ -84,6 +86,7 @@ function MrrpCard({
   createdAt,
   likeCount,
   likedByMe,
+  image_url
 }: Mrrp) {
   const session = useSession();
   const trpcUtils = api.useContext();
@@ -195,6 +198,9 @@ function MrrpCard({
           </span>
         </div>
         <p className="whitespace-pre-wrap">{content}</p>
+        {image_url !== "" && (
+          <img src={image_url} alt="Image uploaded by user" width="500" />
+        )}
         <div className="flex flex-row">
           <HeartButton
             onClick={handleToggleLike}

@@ -8,11 +8,17 @@ await import("./src/env.mjs");
 const config = {
   reactStrictMode: true,
   images: {
-    domains: [
+    /*domains: [
       "cdn.discordapp.com",
       "avatars.githubusercontent.com",
       "lh3.googleusercontent.com",
-    ],
+    ],*/
+    remotePatterns: [
+      {
+         protocol: "https",
+         hostname: "**"
+      },
+   ],
   },
 
   /**

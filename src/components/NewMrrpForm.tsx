@@ -9,9 +9,11 @@ import {
 import { api } from "~/utils/api";
 import { Button } from "./Button";
 import { ProfileImage } from "./ProfileImage";
-import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BadWordsFilter from "bad-words";
+import { ref, uploadBytes } from 'firebase/storage'
+import { storage } from './firebase'
+import { v4 as uuidv4 } from 'uuid'
 
 const badWords = new BadWordsFilter();
 
@@ -29,6 +31,7 @@ export function NewMrrpForm() {
 }
 
 function Form() {
+  const fileInputRef = useRef(null)
   const session = useSession();
   const [inputValue, setInputValue] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>();
@@ -59,7 +62,7 @@ function Form() {
             id: session.data.user.id,
             name: session.data.user.name || null,
             image: session.data.user.image || null,
-          },
+          }
         };
 
         return {
@@ -78,26 +81,23 @@ function Form() {
 
   if (session.status !== "authenticated") return null;
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     // The magic
     e.preventDefault();
 
     if (badWords.isProfane(inputValue)) {
-      toast.error("Profanity is not allowed.", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Slide,
-      });
+      alert('Profanity not allowed')
       return;
     }
-
-    createMrrp.mutate({ content: inputValue });
+    //handleUpload()
+    
+    if (fileInputRef == null || fileInputRef.current == null) return
+    const file = fileInputRef.current.files[0]
+    const path = `images/${uuidv4()}${file.name}`
+        const fileRef = ref(storage, path)
+        await uploadBytes(fileRef, file)
+        const image_url = 'https://firebasestorage.googleapis.com/v0/b/mrrps-eca1d.appspot.com/o/' + path.replace('/', '%2F') + '?alt=media'
+    createMrrp.mutate({ content: inputValue, image_url });
   }
 
   return (
@@ -117,6 +117,7 @@ function Form() {
           placeholder="What's up?"
         />
       </div>
+      <input className="self-end" ref={fileInputRef} type='file' name='file' />
       <Button className="self-end">Mrrp</Button>
     </form>
   );

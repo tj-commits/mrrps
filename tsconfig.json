@@ -28,6 +28,6 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs"
-  ],
+, "src/pages/upload.tsx.tet"  ],
   "exclude": ["node_modules"]
 }
