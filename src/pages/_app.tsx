@@ -20,6 +20,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           name="description"
           content="Mrrps. Social media that's what the cool cats are doing."
         />
+        <link rel="shortcut icon" href="favicon.jpg" />
       </Head>
       <div className="container mx-auto flex items-start sm:pr-4">
         <SideNav />

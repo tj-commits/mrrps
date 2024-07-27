@@ -11,9 +11,10 @@ import { Button } from "./Button";
 import { ProfileImage } from "./ProfileImage";
 import "react-toastify/dist/ReactToastify.css";
 import BadWordsFilter from "bad-words";
-import { ref, uploadBytes } from 'firebase/storage'
-import { firebaseConfig, storage } from './firebase'
-import { v4 as uuidv4 } from 'uuid'
+import { ref, uploadBytes } from "firebase/storage";
+import { firebaseConfig, storage } from "./firebase";
+import { v4 as uuidv4 } from "uuid";
+import { VscCloudUpload } from "react-icons/vsc";
 
 const badWords = new BadWordsFilter();
 
@@ -31,7 +32,8 @@ export function NewMrrpForm() {
 }
 
 function Form() {
-  const fileInputRef = useRef(null)
+  const [ imageUploadedName, setImageUploadedName ] = useState("Upload Image: ")
+  const fileInputRef = useRef(null);
   const session = useSession();
   const [inputValue, setInputValue] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>();
@@ -62,7 +64,7 @@ function Form() {
             id: session.data.user.id,
             name: session.data.user.name || null,
             image: session.data.user.image || null,
-          }
+          },
         };
 
         return {
@@ -85,19 +87,30 @@ function Form() {
     // The magic
     e.preventDefault();
 
+    if (fileInputRef == null || fileInputRef.current == null) return;
+    
+    if (inputValue === "") {
+      alert('Your mrrp must have some text content.')
+      return
+    }
+
     if (badWords.isProfane(inputValue)) {
-      alert('Profanity not allowed')
+      alert("Profanity not allowed");
       return;
     }
     //handleUpload()
+    if (fileInputRef.current.files[0] !== "" && fileInputRef.current.files[0] != null) {
+      
+    const file = fileInputRef.current.files[0];
+    const path = `images/${uuidv4()}${file.name}`;
+    const fileRef = ref(storage, path);
+    await uploadBytes(fileRef, file);
+    const image_url = 'https://firebasestorage.googleapis.com/v0/b/mrrps-eca1d.appspot.com/o/' + path.replace('/', '%2F') + '?alt=media'
     
-    if (fileInputRef == null || fileInputRef.current == null) return
-    const file = fileInputRef.current.files[0]
-    const path = `images/${uuidv4()}${file.name}`
-        const fileRef = ref(storage, path)
-        await uploadBytes(fileRef, file)
-        const image_url = `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o${path.replace('/', '%2F')}?alt=media`
     createMrrp.mutate({ content: inputValue, image_url });
+    } else {
+      createMrrp.mutate({ content: inputValue, image_url: "" });
+    }
   }
 
   return (
@@ -112,13 +125,19 @@ function Form() {
           style={{ height: 0 }}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={(e)=>{if(e.key === 'Enter') handleSubmit(e) }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSubmit(e);
+          }}
           className="flex-grow resize-none overflow-hidden p-4 text-lg outline-none"
           placeholder="What's up?"
         />
       </div>
-      <input className="self-end" ref={fileInputRef} type='file' name='file' />
+      <div className="flex flex-row self-end">
+      <Button className="bg-white hover:bg-white text-neutral-700 cursor-default">{imageUploadedName}</Button>
+      <label htmlFor="file"><VscCloudUpload className="h-12 w-12 cursor-pointer fill-blue-500" /></label>&nbsp;&nbsp;&nbsp;
+      <input className="self-end hidden" ref={fileInputRef} type="file" id="file" name="file" accept="image/*" onChange={() => setImageUploadedName(('Uploaded Image: ' + fileInputRef.current.files[0]?.name) || 'Upload Image: ')} />
       <Button className="self-end">Mrrp</Button>
+      </div>
     </form>
   );
 }

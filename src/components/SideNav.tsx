@@ -9,9 +9,21 @@ export function SideNav() {
 
   return (
     <nav className="sticky top-0 px-2 py-4">
-      <menu className="flex flex-col items-start gap-2 whitespace-nowrap">
+      <menu className="flex flex-col items-start gap-2 whitespace-nowrap items-center justify-center md:justify-start md:items-start">
         <li>
           <Link href="/">
+            <IconHoverEffect>
+              <span className="flex items-center gap-4">
+                <img src="/favicon.jpg" alt="Mrrps logo" width="100" />
+                {/*<span className="hidden text-lg text-blue-700 md:inline">
+                  Mrrps
+                </span>*/}
+              </span>
+            </IconHoverEffect>
+          </Link>
+        </li>
+        <li>
+        <Link href="/">
             <IconHoverEffect>
               <span className="flex items-center gap-4">
                 <VscHome className="h-8 w-8 fill-blue-700" />
@@ -51,8 +63,9 @@ export function SideNav() {
           </li>
         ) : (
           <li>
-            <button onClick={() => void signOut()}>
-              <IconHoverEffect>
+            {/*<button onClick={() => void signOut()}>*/}
+            <Link href="/log-out">
+            <IconHoverEffect>
                 <span className="flex items-center gap-4">
                   <VscSignOut className="h-8 w-8 fill-red-700" />
                   <span className="hidden text-lg text-red-700 md:inline">
@@ -60,7 +73,9 @@ export function SideNav() {
                   </span>
                 </span>
               </IconHoverEffect>
-            </button>
+            </Link>
+              
+            {/*</button>*/}
           </li>
         )}
       </menu>
