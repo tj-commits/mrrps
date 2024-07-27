@@ -12,7 +12,7 @@ import { ProfileImage } from "./ProfileImage";
 import "react-toastify/dist/ReactToastify.css";
 import BadWordsFilter from "bad-words";
 import { ref, uploadBytes } from 'firebase/storage'
-import { storage } from './firebase'
+import { firebaseConfig, storage } from './firebase'
 import { v4 as uuidv4 } from 'uuid'
 
 const badWords = new BadWordsFilter();
@@ -96,7 +96,7 @@ function Form() {
     const path = `images/${uuidv4()}${file.name}`
         const fileRef = ref(storage, path)
         await uploadBytes(fileRef, file)
-        const image_url = 'https://firebasestorage.googleapis.com/v0/b/mrrps-eca1d.appspot.com/o/' + path.replace('/', '%2F') + '?alt=media'
+        const image_url = `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o${path.replace('/', '%2F')}?alt=media`
     createMrrp.mutate({ content: inputValue, image_url });
   }
 
