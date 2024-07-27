@@ -7,6 +7,7 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import Head from "next/head";
 import { SideNav } from "~/components/SideNav";
+import { RightSideSection } from "~/components/RightSideSection";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -27,6 +28,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <main className="min-h-screen flex-grow border-x">
           <Component {...pageProps} />
         </main>
+        <RightSideSection />
       </div>
     </SessionProvider>
   );

@@ -10,13 +10,10 @@ import { api } from "~/utils/api";
 import { Button } from "./Button";
 import { ProfileImage } from "./ProfileImage";
 import "react-toastify/dist/ReactToastify.css";
-import BadWordsFilter from "bad-words";
 import { ref, uploadBytes } from "firebase/storage";
 import { firebaseConfig, storage } from "./firebase";
 import { v4 as uuidv4 } from "uuid";
 import { VscCloudUpload } from "react-icons/vsc";
-
-const badWords = new BadWordsFilter();
 
 function updateTextAreaSize(textArea?: HTMLTextAreaElement) {
   if (textArea == null) return;
@@ -93,11 +90,7 @@ function Form() {
       alert("Your mrrp must have some text content.");
       return;
     }
-
-    if (badWords.isProfane(inputValue)) {
-      alert("Profanity not allowed");
-      return;
-    }
+    
     //handleUpload()
     if (
       fileInputRef.current.files[0] !== "" &&

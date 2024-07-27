@@ -62,5 +62,35 @@ export const profileRouter = createTRPCRouter({
 
       // Return addedoflow
       return { addedFollow };
-    }),
+    })
 });
+
+function a() {
+  
+}
+
+/*function getSelectedRandomProfiles(
+  howManyProfilesToGet: number,
+  profiles: any
+) {
+  const selectedProfiles = [];
+  for (let i = 0; i < howManyProfilesToGet; i++) {
+    let selectedProfile;
+    for (let j = 0; j < profiles.length; j++) {
+      const profile = profiles[j];
+      const chance = true;
+      const ifThisIsNullThenContinue = selectedProfiles.find(p => p === profile)
+      if (ifThisIsNullThenContinue == null) {
+        continue
+      }
+      const isSelectedProfile = chance;
+      if (isSelectedProfile) {
+        selectedProfile = profile;
+        break;
+      }
+    }
+    selectedProfiles.push(selectedProfile);
+  }
+  return selectedProfiles;
+}
+*/

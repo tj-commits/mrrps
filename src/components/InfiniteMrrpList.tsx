@@ -6,7 +6,6 @@ import { VscHeart, VscHeartFilled, VscTrash } from "react-icons/vsc";
 import { IconHoverEffect } from "./IconHoverEffect";
 import { api } from "~/utils/api";
 import { LoadingSpinner } from "./LoadingSpinner";
-import Image from "next/image";
 
 type Mrrp = {
   id: string;
