@@ -53,6 +53,28 @@ export const mrrpRouter = createTRPCRouter({
         });
       }
     ),
+<<<<<<< HEAD
+=======
+  infiniteSearchFeed: publicProcedure
+    .input(
+      z.object({
+        search: z.string(),
+        limit: z.number().optional(),
+        cursor: z.object({ id: z.string(), createdAt: z.date() }).optional(),
+      })
+    )
+    .query(async ({ input: { limit = 10, search, cursor }, ctx }) => {
+      return await getInfiniteMrrps({
+        limit,
+        ctx,
+        cursor,
+        whereClause: { content: {
+          contains: `${search} `,
+          mode: 'insensitive'
+        } },
+      });
+    }),
+>>>>>>> 24c7469 (explore)
   create: protectedProcedure
     .input(z.object({ content: z.string(), image_url: z.string() }))
     .mutation(async ({ input: { content, image_url }, ctx }) => {
@@ -64,8 +86,13 @@ export const mrrpRouter = createTRPCRouter({
 
       return mrrp;
     }),
+<<<<<<< HEAD
   
     delete: protectedProcedure
+=======
+
+  delete: protectedProcedure
+>>>>>>> 24c7469 (explore)
     .input(z.object({ id: z.string() }))
     .mutation(async ({ input: { id }, ctx }) => {
       await ctx.prisma.mrrp.delete({
@@ -77,7 +104,10 @@ export const mrrpRouter = createTRPCRouter({
       return { deleted: true };
     }),
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 24c7469 (explore)
   toggleLike: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ input: { id }, ctx }) => {
@@ -95,6 +125,22 @@ export const mrrpRouter = createTRPCRouter({
         return { addedLike: false };
       }
     }),
+<<<<<<< HEAD
+=======
+  
+  /*search: protectedProcedure
+    .input(z.object({ query: z.string() }))
+    .query(async ({ input: { query }, ctx }) => {
+      const result = await ctx.prisma.mrrp.findMany({
+        where: {
+          content: {
+            search: query
+          }
+        }
+      })
+      return result
+    })*/
+>>>>>>> 24c7469 (explore)
 });
 
 async function getInfiniteMrrps({
