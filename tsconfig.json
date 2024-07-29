@@ -28,6 +28,6 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs"
-, "src/pages/upload.tsx.tet"  ],
+, "src/pages/upload.tsx.tet", "postcss.config.cjse"  ],
   "exclude": ["node_modules"],
 }

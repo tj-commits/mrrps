@@ -1,11 +1,4 @@
 import { type Config } from "tailwindcss";
-<<<<<<< HEAD
-
-export default {
-  content: ["./src/**/*.{js,ts,jsx,tsx}"],
-  theme: {
-    extend: {},
-=======
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -17,7 +10,6 @@ export default {
         '128': '32rem',
       }
     }
->>>>>>> 24c7469 (explore)
   },
   plugins: [],
 } satisfies Config;

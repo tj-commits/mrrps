@@ -9,7 +9,6 @@ import Head from "next/head";
 import { SideNav } from "~/components/SideNav";
 import { RightSideSection } from "~/components/RightSideSection";
 import Link from "next/link";
-import { sessionbrobro } from "./session";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
