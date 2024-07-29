@@ -1,12 +1,8 @@
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { IconHoverEffect } from "./IconHoverEffect";
-<<<<<<< HEAD
-import { VscAccount, VscHome, VscSignIn, VscSignOut } from "react-icons/vsc";
-=======
 import { VscAccount, VscHome, VscSearch, VscSignIn, VscSignOut } from "react-icons/vsc";
 import { HiHashtag } from "react-icons/hi2";
->>>>>>> 24c7469 (explore)
 
 export function SideNav() {
   const session = useSession();
@@ -39,8 +35,6 @@ export function SideNav() {
             </IconHoverEffect>
           </Link>
         </li>
-<<<<<<< HEAD
-=======
         <li>
           <Link href="/explore">
           <IconHoverEffect>
@@ -53,7 +47,6 @@ export function SideNav() {
             </IconHoverEffect>
           </Link>
         </li>
->>>>>>> 24c7469 (explore)
         {user != null && (
           <li>
             <Link href={`/profiles/${user.id}`}>
