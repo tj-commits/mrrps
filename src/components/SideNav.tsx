@@ -2,7 +2,6 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { IconHoverEffect } from "./IconHoverEffect";
 import { VscAccount, VscHome, VscSearch, VscSignIn, VscSignOut } from "react-icons/vsc";
-import { HiHashtag } from "react-icons/hi2";
 
 export function SideNav() {
   const session = useSession();

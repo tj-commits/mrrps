@@ -49,11 +49,7 @@ export function InfiniteMrrpList({
       <h2 className="text-2x1 my-4 text-center text-gray-500">
         {onlyFollowing === true
           ? "You are not following any accounts yet. To follow someone, visit their profile page by clicking on their profile picture, and click Follow."
-<<<<<<< HEAD
-          : "No mrrps"}
-=======
           : "Search results will show up here"}
->>>>>>> 24c7469 (explore)
       </h2>
     );
   }

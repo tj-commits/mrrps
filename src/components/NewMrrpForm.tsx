@@ -9,7 +9,6 @@ import {
 import { api } from "~/utils/api";
 import { Button } from "./Button";
 import { ProfileImage } from "./ProfileImage";
-import "react-toastify/dist/ReactToastify.css";
 import { ref, uploadBytes } from "firebase/storage";
 import { firebaseConfig, storage } from "./firebase";
 import { v4 as uuidv4 } from "uuid";
