@@ -37,14 +37,6 @@ const config = {
     // your project has type errors.
     // !! WARN !!
     ignoreBuildErrors: true,
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/@:id',
-        destination: '/profiles/:id'
-      }
-    ]
   }
 };
 export default config;
