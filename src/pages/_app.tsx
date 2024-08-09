@@ -9,6 +9,9 @@ import Head from "next/head";
 import { SideNav } from "~/components/SideNav";
 import { RightSideSection } from "~/components/RightSideSection";
 import Link from "next/link";
+import { LoadingSpinner } from "~/components/LoadingSpinner";
+import { FormEvent, useRef, useState } from "react";
+import { Button } from "~/components/Button";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -32,10 +35,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
 };
 
 function It({ Component, ...pageProps }: any) {
+  const session = useSession()
+  console.log(session)
   return <>
-  { useSession().status !== 'authenticated' ? (
-    <Splash />
-  ) : (
+  {session.status === 'authenticated' && session.data!.user.name == null && (
+    <FirstTimeSetup />
+  )}
+  {session.status === 'authenticated' && session.data!.user.name != null && (
     <>
       <div className="container mx-auto flex items-start sm:pr-4">
         <SideNav />
@@ -44,7 +50,66 @@ function It({ Component, ...pageProps }: any) {
         </main>
       </div>
     </>
-  )}</>
+  )}
+  { session.status === 'unauthenticated' && (
+    <Splash />
+  )}
+  { session.status === 'loading' && (
+    <div className="flex justify-center items-center col h-screen">
+      <img src="/favicon.jpg" alt="Mrrps logo" width="100" />
+    </div>
+  )}
+  </>
+}
+
+function FirstTimeSetup() {
+  const session = useSession()
+  const [id, setId] = useState('')
+  const [name, setName] = useState('')
+  const [handleAvailable, setHandleAvailable] = useState('unavailable')
+  const [image, setImage] = useState('')
+  const updateProfile = api.profile.edit.useMutation({
+    onSuccess: () => {
+      console.log('mhm')
+    }
+  })
+  function checkHandleAvailable(e: FormEvent) {
+    setId(e.target.value)
+
+    const req = new XMLHttpRequest()
+    req.onload = () => {
+      if (req.status === 404) {
+        setHandleAvailable('available') 
+      } else {
+        setHandleAvailable('unavailable')
+      }
+    }
+    req.open('GET', '/profiles/' + id, true)
+    req.send()
+  }
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault()
+    updateProfile.mutate({ id: id, image: image, name: name, currentId: session.data!.user.id })
+    location.reload()
+  }
+  return <div className="px-5 py-5 text-center">
+  <h1 className="text-2xl">First Time Setup</h1>
+  <p>You just created your account with Mrrps, now we need some info!</p>
+  <hr />
+  <br/>
+  <form onSubmit={handleSubmit}>
+    <div>
+    <label htmlFor="name">What is your name?</label>&nbsp;&nbsp;
+    <input required className="border-2 border-black py-1 px-1 w-20" type="text" name="name" id="name" placeholder="John Doe" value={name} onChange={(e) => setName(e.target.value)} /></div><br /><div>
+    <label htmlFor="image">Enter the URL of a profile picture:</label>&nbsp;&nbsp;
+    <input required className="border-2 border-black py-1 px-1 w-96" type="url" name="image" id="image" placeholder="https://www.example.com/uploads/profile.png" value={image} onChange={(e) => setImage(e.target.value)} /></div><br /><div>
+    <label htmlFor="id">Enter a handle:</label>&nbsp;&nbsp;{'@'}
+    <input required name="id" id="id" type="text" className="border-2 border-black py-1 px-1 w-22" value={id} placeholder="johndoe" onChange={checkHandleAvailable} />
+    <p>That handle is <span>{handleAvailable}</span></p>
+    </div>
+    <Button type="submit">OK</Button>
+  </form>
+</div>
 }
 
 function Splash() {

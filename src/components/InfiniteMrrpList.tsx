@@ -38,7 +38,7 @@ export function InfiniteMrrpList({
   hasMore,
   onlyFollowing,
 }: InfiniteMrrpListProps) {
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading) return <div className="flex h-full justify-center items-center"><LoadingSpinner /></div>;
   if (isError) {
     return <h1>ERROR!</h1>;
   }
@@ -62,7 +62,7 @@ export function InfiniteMrrpList({
         dataLength={mrrps.length}
         next={fetchNewMrrps}
         hasMore={hasMore}
-        loader={<LoadingSpinner />}
+        loader={<div className="flex h-full justify-center items-center"><LoadingSpinner /></div>}
       >
         {mrrps.map((mrrp) => {
           return <MrrpCard key={mrrp.id} {...mrrp} />;
@@ -191,8 +191,15 @@ function MrrpCard({
           >
             {user.name}
           </Link>
-          <span className="text-gray-500"></span>
+          <Link
+            href={`/profiles/${user.id}`}
+            className=" text-gray-500 outline-none"
+          >
+            @{user.id}
+          </Link>
           <span className="text-gray-500">
+            
+          {" "}&bull;{" "}
             {dateTimeFormatter.format(createdAt)}
           </span>
         </div>

@@ -57,7 +57,7 @@ const ProfilePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </Link>
         <ProfileImage src={profile.image} className="flex-shrink-0" />
         <div className="ml-2 flex-grow">
-          <h1 className="text-lg font-bold">{profile.name}</h1>
+          <h1 className="text-lg font-bold">{profile.name}{" "}<span className="text-gray-500 font-normal">@{id}</span></h1>
           <div className="text-gray-500">
             {profile.mrrpsCount}{" "}
             {getPlural(profile.mrrpsCount, "Mrrp", "Mrrps")} -{" "}

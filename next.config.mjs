@@ -38,5 +38,13 @@ const config = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  async rewrites() {
+    return [
+      {
+        source: '/@:id',
+        destination: '/profiles/:id'
+      }
+    ]
+  }
 };
 export default config;

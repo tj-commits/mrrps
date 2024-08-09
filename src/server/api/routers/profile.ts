@@ -18,7 +18,7 @@ export const profileRouter = createTRPCRouter({
           followers:
             currentUserId == null
               ? undefined
-              : { where: { id: currentUserId } },
+              : { where: { id: currentUserId } }
         },
       });
 
@@ -30,7 +30,7 @@ export const profileRouter = createTRPCRouter({
         followersCount: profile._count.followers,
         followsCount: profile._count.follows,
         mrrpsCount: profile._count.mrrps,
-        isFollowing: profile.followers.length > 0,
+        isFollowing: profile.followers.length > 0
       };
     }),
   toggleFollow: protectedProcedure
@@ -62,6 +62,14 @@ export const profileRouter = createTRPCRouter({
 
       // Return addedoflow
       return { addedFollow };
+    }),
+  edit: publicProcedure
+    .input(z.object({ currentId: z.string(), id: z.string(), image: z.string(), name: z.string()}))
+    .mutation(async({ input: { currentId, id, image, name }, ctx}) => {
+      await ctx.prisma.user.update({
+        where: { id: currentId },
+        data: { id, image, name },
+      });
     })
 });
 
