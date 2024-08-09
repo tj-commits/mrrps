@@ -89,6 +89,10 @@ function FirstTimeSetup() {
   }
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    if (handleAvailable === 'unavailable') {
+      alert('The handle you chose is unavailable!')
+      return
+    }
     updateProfile.mutate({ id: id, image: image, name: name, currentId: session.data!.user.id })
     location.reload()
   }
