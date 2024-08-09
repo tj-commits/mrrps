@@ -70,7 +70,19 @@ export const profileRouter = createTRPCRouter({
         where: { id: currentId },
         data: { id, image, name },
       });
-    })
+    }),
+    doesUserExistFromId: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input: { id }, ctx }) => {
+      const profile = await ctx.prisma.user.findUnique({
+        where: { id },
+        select: {
+          name: true
+        }
+      })
+      if (profile == null) return false
+      return true
+    }),
 });
 
 function a() {

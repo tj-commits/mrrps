@@ -66,6 +66,7 @@ function FirstTimeSetup() {
   const session = useSession()
   const [id, setId] = useState('')
   const [name, setName] = useState('')
+  const { data } = api.profile.doesUserExistFromId.useQuery({ id })
   const [handleAvailable, setHandleAvailable] = useState('unavailable')
   const [image, setImage] = useState('')
   const updateProfile = api.profile.edit.useMutation({
@@ -73,19 +74,13 @@ function FirstTimeSetup() {
       console.log('mhm')
     }
   })
-  function checkHandleAvailable(e: FormEvent) {
-    setId(e.target.value)
-
-    const req = new XMLHttpRequest()
-    req.onload = () => {
-      if (req.status === 404) {
-        setHandleAvailable('available') 
-      } else {
+function checkHandleAvailable() {
+    
+      if (data) {
         setHandleAvailable('unavailable')
+      } else {
+        setHandleAvailable('available') 
       }
-    }
-    req.open('GET', '/profiles/' + id, true)
-    req.send()
   }
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -108,7 +103,10 @@ function FirstTimeSetup() {
     <label htmlFor="image">Enter the URL of a profile picture:</label>&nbsp;&nbsp;
     <input required className="border-2 border-black py-1 px-1 w-96" type="url" name="image" id="image" placeholder="https://www.example.com/uploads/profile.png" value={image} onChange={(e) => setImage(e.target.value)} /></div><br /><div>
     <label htmlFor="id">Enter a handle:</label>&nbsp;&nbsp;{'@'}
-    <input required name="id" id="id" type="text" className="border-2 border-black py-1 px-1 w-22" value={id} placeholder="johndoe" onChange={checkHandleAvailable} />
+    <input required name="id" id="id" type="text" className="border-2 border-black py-1 px-1 w-22" value={id} placeholder="johndoe" onChange={(e) => {
+      setId(e.target.value)
+      checkHandleAvailable()
+    }} />
     <p>That handle is <span>{handleAvailable}</span></p>
     </div>
     <Button type="submit">OK</Button>
