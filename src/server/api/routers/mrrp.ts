@@ -125,6 +125,39 @@ export const mrrpRouter = createTRPCRouter({
       })
       return result
     })*/
+
+  getById: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async({ input: { id }, ctx}) => {
+      const currentUserId = ctx.session?.user.id
+      const mrrp = await ctx.prisma.mrrp.findUnique({
+        where: {
+          id
+        },
+        select: {
+          id: true,
+      content: true,
+      image_url: true,
+      createdAt: true,
+      _count: { select: { likes: true } },
+      likes:
+        currentUserId == null ? false : { where: { userId: currentUserId } },
+      user: {
+        select: { name: true, id: true, image: true },
+      },
+        }
+      })
+      if (mrrp == null || mrrp.id == null || mrrp.content == null || mrrp.image_url == null || mrrp.createdAt == null || mrrp._count == null || mrrp._count.likes == null || mrrp.user == null) return
+      return {
+        id: mrrp.id,
+        content: mrrp.content,
+        image_url: mrrp.image_url,
+        createdAt: mrrp.createdAt,
+        likeCount: mrrp._count.likes,
+        user: mrrp.user,
+        likedByMe: mrrp.likes?.length > 0
+      }
+    })
 });
 
 async function getInfiniteMrrps({
@@ -156,6 +189,7 @@ async function getInfiniteMrrps({
       user: {
         select: { name: true, id: true, image: true },
       },
+      comments: true
     },
   });
 
@@ -177,6 +211,7 @@ async function getInfiniteMrrps({
         likeCount: mrrp._count.likes,
         user: mrrp.user,
         likedByMe: mrrp.likes?.length > 0,
+        comments: mrrp.comments
       };
     }),
     nextCursor,

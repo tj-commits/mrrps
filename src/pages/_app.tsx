@@ -36,7 +36,6 @@ const MyApp: AppType<{ session: Session | null }> = ({
 
 function It({ Component, ...pageProps }: any) {
   const session = useSession()
-  console.log(session)
   return <>
   {session.status === 'authenticated' && session.data!.user.name == null && (
     <FirstTimeSetup />

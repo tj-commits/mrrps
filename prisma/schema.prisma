@@ -18,11 +18,12 @@ model Mrrp {
     id        String   @id @default(uuid())
     userId    String
     content   String
-    image_url String @default("")
+    image_url String   @default("")
     createdAt DateTime @default(now())
 
-    user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-    likes Like[]
+    user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    likes    Like[]
+    comments Comment[]
 
     @@unique([createdAt, id])
     @@index([userId])
@@ -59,6 +60,32 @@ model Account {
     @@index([userId])
 }
 
+model Comment {
+    id        String   @id @default(cuid())
+    body      String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    commentLike CommentLike[]
+
+    mrrpId String
+    mrrp   Mrrp   @relation(fields: [mrrpId], references: [id], onDelete: Cascade)
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model CommentLike {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    commentId String
+    comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([userId, commentId])
+}
+
 model Session {
     id           String   @id @default(cuid())
     sessionToken String   @unique
@@ -79,10 +106,12 @@ model User {
     sessions      Session[]
 
     // Non-NextAuth
-    mrrps     Mrrp[]
-    likes     Like[]
-    followers User[] @relation(name: "Followers")
-    follows   User[] @relation(name: "Followers")
+    mrrps        Mrrp[]
+    likes        Like[]
+    followers    User[]        @relation(name: "Followers")
+    follows      User[]        @relation(name: "Followers")
+    comments     Comment[]
+    commentLikes CommentLike[]
 }
 
 model VerificationToken {
