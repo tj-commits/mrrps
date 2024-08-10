@@ -37,10 +37,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
 function It({ Component, ...pageProps }: any) {
   const session = useSession()
   return <>
-  {session.status === 'authenticated' && session.data!.user.name == null && (
+  {session.status === 'authenticated' && session.data?.user.name == null && (
     <FirstTimeSetup />
   )}
-  {session.status === 'authenticated' && session.data!.user.name != null && (
+  {session.status === 'authenticated' && session.data?.user.name != null && (
     <>
       <div className="container mx-auto flex items-start sm:pr-4">
         <SideNav />
