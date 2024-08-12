@@ -98,7 +98,9 @@ function checkHandleAvailable() {
       return
     }
     updateProfile.mutate({ id: id, image: image, name: name, currentId: session.data!.user.id })
-    location.reload()
+    setTimeout(function() {
+      location.reload()
+    }, 1000)
   }
   return <div className="px-5 py-5 text-center">
   <h1 className="text-2xl">First Time Setup</h1>
