@@ -69,6 +69,11 @@ export const profileRouter = createTRPCRouter({
       await ctx.prisma.user.update({
         where: { id: currentId },
         data: { id, image, name },
+        select: {
+          id: true,
+          image: true,
+          name: true
+        }
       });
     }),
     doesUserExistFromId: publicProcedure
