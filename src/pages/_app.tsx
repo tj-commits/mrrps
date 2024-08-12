@@ -12,6 +12,7 @@ import Link from "next/link";
 import { LoadingSpinner } from "~/components/LoadingSpinner";
 import { FormEvent, useRef, useState } from "react";
 import { Button } from "~/components/Button";
+import Image from "next/image";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -59,12 +60,12 @@ function It({ Component, ...pageProps }: any) {
   <div className="animated-border-box-glow"></div>
   <div className="animated-border-box">
     
-  <img src="/favicon.jpg" alt="Mrrps logo" width="100" />
+  <Image src="/favicon.jpg" alt="Mrrps logo" width="100" height="100" />
   </div>
     </div>
     <div className="absolute bottom-5 left-1/2 text-center">
       <p className="relative left-[-50%] text-gray-500 text-lg">from</p>
-      <img className="relative left-[-45%]" src="https://rafdo-search.vercel.app/images/logo.png" alt="Rafdo" width="75" />
+      <Image className="relative left-[-45%]" src="https://rafdo-search.vercel.app/images/logo.png" alt="Rafdo" width="75" height="30" />
     </div></>
   )}
   </>
