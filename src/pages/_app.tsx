@@ -54,9 +54,18 @@ function It({ Component, ...pageProps }: any) {
     <Splash />
   )}
   { session.status === 'loading' && (
-    <div className="flex justify-center items-center col h-screen">
-      <img src="/favicon.jpg" alt="Mrrps logo" width="100" />
+    <>
+    <div className="flex justify-center items-center col h-screen px-0 py-0 w-screen">
+  <div className="animated-border-box-glow"></div>
+  <div className="animated-border-box">
+    
+  <img src="/favicon.jpg" alt="Mrrps logo" width="100" />
+  </div>
     </div>
+    <div className="absolute bottom-5 left-1/2 text-center">
+      <p className="relative left-[-50%] text-gray-500 text-lg">from</p>
+      <img className="relative left-[-45%]" src="https://rafdo-search.vercel.app/images/logo.png" alt="Rafdo" width="75" />
+    </div></>
   )}
   </>
 }
